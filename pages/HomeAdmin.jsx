@@ -1,25 +1,59 @@
 import React from "react";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import '../src/App.css'
 import Navbar from "../component/Navbar";
 import AdminAndUserBtn from "../component/AdminAndUserBtn";
-export default function HomeAdmin() {
-
-    const [name, setname] = useState('');
-    const rName = useRef("");
-    const [lastName, setLastName] = useState('')
-    const rLastName = useRef("");
-    const [positon, setPosition] = useState('')
-    const rPositon = useRef("");
+import axios from "axios";
+import AddData from "../component/AddData";
+import DataTable from "../component/DataTable";
 
 
+export default function HomeAdmin(props) {
+
+    const [name, setname] = useState();
+    const [lastname, setlastname] = useState()
+    const [position, setPosition] = useState()
+
+    const [data, setdata] = useState([])
+    const client = axios.create({
+        baseURL: 'https://jsd5-mock-backend.onrender.com/members'
+    })
+    const clientDelet = axios.create({
+        baseURL: 'https://jsd5-mock-backend.onrender.com/member/'
+    })
+    const fetchData = async () => {
+        const response = await client.get('');
+        setdata(response.data);
+        console.log(data)
+    }
+
+    useEffect(() => {
+        fetchData()
+    }, []);
+
+
+    const addData = async (name, lastname, position) => {
+        const response = await client.post('', {
+            name,
+            lastname,
+            position
+        });
+        setdata((prevData) => [response.data, ...prevData])
+    };
+
+    const deleteData = async (id) => {
+        const response = await clientDelet.delete(`${id}`);
+        setdata(data.filter((d) => d.id !== id))
+    };
     const handleSubmit = (e) => {
         e.preventDefault();
-        rName.current.value = "";
-        rLastName.current.value = "";
-        rPositon.current.value = "";
-        console.log({ name }, { lastName }, { positon })
-    }
+        props.addPost(name, lastname, position);
+        setname('');
+        setlastname('');
+        setPosition('');
+
+    };
+
 
     return (
         <div>
@@ -27,34 +61,19 @@ export default function HomeAdmin() {
             <div className="user-page-container">
                 <h1>Generation Thailand Home - Admin Sector</h1>
                 <AdminAndUserBtn />
-                <form className="addUserForm" onSubmit={handleSubmit} >
-                    <label htmlFor="name">name</label>
-                    <input value={name} ref={rName} onChange={(e) => setname(e.target.value)} />
+                <AddData addData={addData} />
+                {data.map((d, i) =>
 
-                    <label htmlFor="lastName">lastName</label>
-                    <input value={lastName} ref={rLastName} onChange={(e) => setLastName(e.target.value)} />
+                    <DataTable
+                        key={i}
+                        id={d.id}
+                        name={d.name}
+                        lastname={d.lastname}
+                        position={d.position}
+                        deleteData={deleteData}
+                    />
 
-                    <label htmlFor="position">position</label>
-                    <input value={positon} ref={rPositon} onChange={(e) => setPosition(e.target.value)} />
-
-                    <button type="submit">save</button>
-                </form>
-                <div className="user-table-container">
-                    <table>
-                        <tr>
-                            <th>Name</th>
-                            <th>LastName</th>
-                            <th>Position</th>
-                            <th>Action
-
-                                <button>deleted</button>
-
-                            </th>
-                        </tr>
-                    </table>
-                </div>
-
-                <button>deleted</button>
+                )}
             </div>
         </div>
     )

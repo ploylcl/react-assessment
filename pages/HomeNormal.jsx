@@ -4,6 +4,8 @@ import Navbar from "../component/Navbar";
 import AdminAndUserBtn from "../component/AdminAndUserBtn";
 
 export default function HomeNormal() {
+    
+
     return (
         <div>
             <Navbar />

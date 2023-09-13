@@ -1,6 +1,7 @@
 *{
     margin: 0;
     box-sizing: border-box;
+    padding: 0px;
 }
 li{
     margin-right: 10px;
@@ -20,12 +21,23 @@ ul {
     flex-direction: column;
 }
 
-.btn{
-    padding: 15px 20px;
+button{
+    background-color: #b8d1b9; 
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
 }
 /* Home-user */
 table, th, td {
     border: 1px solid;
   }
 
-  /* home-Admin */
+.Btn-containe{
+    height: 10em;
+    display: flex;
+    align-items: center 
+}
