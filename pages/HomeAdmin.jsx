@@ -2,6 +2,7 @@ import React from "react";
 import { useState, useRef } from "react";
 import '../src/App.css'
 import Navbar from "../component/Navbar";
+import AdminAndUserBtn from "../component/AdminAndUserBtn";
 export default function HomeAdmin() {
 
     const [name, setname] = useState('');
@@ -25,10 +26,7 @@ export default function HomeAdmin() {
             <Navbar />
             <div className="user-page-container">
                 <h1>Generation Thailand Home - Admin Sector</h1>
-                <div className="btn-container">
-                    <button className="btn">User Home Sector</button>
-                    <button className="btn"> Admin Home Sector</button>
-                </div>
+                <AdminAndUserBtn />
                 <form className="addUserForm" onSubmit={handleSubmit} >
                     <label htmlFor="name">name</label>
                     <input value={name} ref={rName} onChange={(e) => setname(e.target.value)} />

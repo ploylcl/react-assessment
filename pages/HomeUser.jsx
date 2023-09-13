@@ -1,15 +1,13 @@
 import React from "react";
 import '../src/App.css'
+import AdminAndUserBtn from "../component/AdminAndUserBtn";
 export default function HomeUser() {
     return (
         <div>
             <Navbar />
             <div className="user-page-container">
                 <h1>Generation Thailand Home - User Sector</h1>
-                <div className="btn-container">
-                    <button className="btn">User Home Sector</button>
-                    <button className="btn"> Admin Home Sector</button>
-                </div>
+                <AdminAndUserBtn />
 
                 <div className="user-table-container">
                     <table>
