@@ -1,46 +1,63 @@
 import React from "react";
-import  { useState } from "react";
+import { useState, useRef } from "react";
 import '../src/App.css'
+import Navbar from "../component/Navbar";
 export default function HomeAdmin() {
 
-    const [name,setname] =useState('');
-    const [lastName,setLastName] = useState('')
-    const [positon,setPosition] = useState('')
-    const handleSubmit = (e) =>{
+    const [name, setname] = useState('');
+    const rName = useRef("");
+    const [lastName, setLastName] = useState('')
+    const rLastName = useRef("");
+    const [positon, setPosition] = useState('')
+    const rPositon = useRef("");
+
+
+    const handleSubmit = (e) => {
         e.preventDefault();
-        console.log({name},{lastName},{positon})
+        rName.current.value = "";
+        rLastName.current.value = "";
+        rPositon.current.value = "";
+        console.log({ name }, { lastName }, { positon })
     }
 
     return (
-        <div className="user-page-container">
-            <h1>Generation Thailand Home - Admin Sector</h1>
-            <div className="btn-container">
-                <button className="btn">User Home Sector</button>
-                <button className="btn"> Admin Home Sector</button>
+        <div>
+            <Navbar />
+            <div className="user-page-container">
+                <h1>Generation Thailand Home - Admin Sector</h1>
+                <div className="btn-container">
+                    <button className="btn">User Home Sector</button>
+                    <button className="btn"> Admin Home Sector</button>
+                </div>
+                <form className="addUserForm" onSubmit={handleSubmit} >
+                    <label htmlFor="name">name</label>
+                    <input value={name} ref={rName} onChange={(e) => setname(e.target.value)} />
+
+                    <label htmlFor="lastName">lastName</label>
+                    <input value={lastName} ref={rLastName} onChange={(e) => setLastName(e.target.value)} />
+
+                    <label htmlFor="position">position</label>
+                    <input value={positon} ref={rPositon} onChange={(e) => setPosition(e.target.value)} />
+
+                    <button type="submit">save</button>
+                </form>
+                <div className="user-table-container">
+                    <table>
+                        <tr>
+                            <th>Name</th>
+                            <th>LastName</th>
+                            <th>Position</th>
+                            <th>Action
+
+                                <button>deleted</button>
+
+                            </th>
+                        </tr>
+                    </table>
+                </div>
+
+                <button>deleted</button>
             </div>
-            <form onSubmit={handleSubmit} >
-                <label htmlFor="name">name</label>
-                <input value={name} onChange={(e) => setname(e.target.value)}  />
-
-                <label htmlFor="lastName">lastName</label>
-                <input value={lastName} onChange={(e) => setLastName(e.target.value)} />
-
-                <label htmlFor="LastName">lastName</label>
-                <input value={positon} onChange={(e) => setPosition(e.target.value)}  />
-                
-                <button type="submit">save</button>
-            </form>
-            <div className="user-table-container">
-                <table>
-                    <tr>
-                        <th>Name</th>
-                        <th>LastName</th>
-                        <th>Position</th>
-                    </tr>
-                </table>
-            </div>
-
-            <button>deleted</button>
         </div>
     )
 }
